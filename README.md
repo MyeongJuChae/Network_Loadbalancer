@@ -116,15 +116,15 @@ rpm -ivh --force --nodeps *.rpm
 	sudo make install
 	```
 + Keepalived 필수 소프트웨어 설치 및 keepalived 빌드
-```
-cd Keepalived
-ls -al
-rpm -ivh --force --nodeps *.rpm
-cd keepalived
-./build_setup 
-./configure
-make
-sudo make install
-```
+	```
+	cd Keepalived
+	ls -al
+	rpm -ivh --force --nodeps *.rpm
+	cd keepalived
+	./build_setup 
+	./configure
+	make
+	sudo make install
+	```
 
 
