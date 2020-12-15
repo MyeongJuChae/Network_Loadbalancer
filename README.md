@@ -1,7 +1,7 @@
 # TTS HA와 Load-balacning 구성
 TTS HA(High Availability) load balancing 관련 검토 결과 HAProxy + keepalived가 가장 적당한 solution. 
 
-Nginx와 keepalived도 많이 사용하는 구성이나 keepalived와 같이 구성하려면 Nginx Plus를 사용해야 함. Nginx Plus는 상용 버전으로 instace당 라이선스가 4백만원 정도 되는 듯.
+Nginx와 keepalived도 많이 사용하는 구성이나 keepalived와 같이 구성하려면 Nginx Plus를 사용해야 함. Nginx Plus는 상용 버전으로 instance당 라이선스가 4백만원 정도 되는 듯.
 
 ## 1. HAProxy 설치
 www.haproxy.org 홈페이지 참고.
@@ -11,7 +11,9 @@ Centos 7.5에서 yum install -y haproxy 로 설치된 haproxy의 버전은 1.5.1
 http://git.haproxy.org/git/haproxy-2.3.git/
 
 git clone후 haproxy-2.3 디렉토리의 INSTALL 문서 참고
+
 ```
+cd HAProxy
 git clone http://git.haproxy.org/git/haproxy-2.3.git
 cd haproxy-2.3 
 sudo yum install -y systemd-devel --> AICC 도커 환경에서 dependency 설치 필요
@@ -68,7 +70,10 @@ haproxy는 /usr/local/sbin에 설치됨.
 ## 2. Keepalived 설치
 stable 2.1.5 버전 설치
 
+```
+cd Keepalived
 git clone https://github.com/acassen/keepalived.git
+```
 
 아래 dependency 패키지를 먼저 설치
 ```
@@ -92,5 +97,34 @@ sudo make install
 /usr/local/etc 아래에 keepalived.conf가 위치함
 
 
+### 3. HAProxy와 Keepalived offline 설치- 인터넷 환경이 없을 때
+금융권 프로젝트의 경우 패쇄망을 사용하기 때문에 yum install로 필요한 패키지를 설치할 수 없기 떄문에 rpm 패키지를 미리 받아놓고 설치할 필요가 있다.
+HAProxy와 Keepalived 경로에 필요한 RPM 패키지가 포함되어 있다. 각각의 경로로 이동하여 아래의 명령어로 필요 소프트웨어를 설치한다.
+```
 rpm -Uvh --force --nodeps *.rpm
+(or)
 rpm -ivh --force --nodeps *.rpm
+```
+`-U`는 업데이트된 패키지가 있으면 받아와서 설치하는 옵션인데 인터넷 환경이 없으면 `-i` 옵션과 동일하다.
++ HAProxy 필수 소프트웨어 설치 및 haproxy 빌드
+	```
+	cd HAProxy
+	ls -al
+	rpm -ivh --force --nodeps *.rpm
+	cd haproxy-2.3
+	make -j $(nproc) TARGET=linux-glibc USE_OPENSSL=1 USE_ZLIB=1 USE_PCRE=1 USE_SYSTEMD=1
+	sudo make install
+	```
++ Keepalived 필수 소프트웨어 설치 및 keepalived 빌드
+```
+cd Keepalived
+ls -al
+rpm -ivh --force --nodeps *.rpm
+cd keepalived
+./build_setup 
+./configure
+make
+sudo make install
+```
+
+
