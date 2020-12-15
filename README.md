@@ -54,6 +54,27 @@ install: creating directory `/usr/local/doc/haproxy'
 ```
 sudo yum install --downloadonly --downloaddir=. openssl-devel
 sudo yum install --downloadonly --downloaddir=. systemd-devel
+yumdownloader 를 이용한 rpm download
+
+
+
+yumdownloader 명령을 사용하려면 우선 설치를 해야한다. 
+
+
+
+# yum install yum-utils 
+
+
+
+
+
+사용방법: 
+
+ ex) # yumdownloader --resolve --destdir=. openssl-devel 
+
+--resolve 옵션: 의존되는 모든 패키지들도 다운받도록 해준다.
+
+--destdir 옵션: 저장되는 디렉토리를 지정할 수 있다. 
 ```
 설치 후 현재경로에서 아래를 확인
 
