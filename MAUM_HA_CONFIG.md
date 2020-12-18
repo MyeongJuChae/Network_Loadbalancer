@@ -146,7 +146,7 @@ vim 편집기로 ifcfg-eno3:1 열어서 아래 라인을 변경한다. 나머지
 NAME=eno3:1
 DEVICE=eno3:1
 ONBOOT=yes
-IPADDR=10.122.64.129        ##
+IPADDR=10.122.64.129        #Virtual IP
 ```
 편집한 후에 아래의 명령을 수행하여 VIP용 네트워크 인터페이스를 활성화한다.
 ```
