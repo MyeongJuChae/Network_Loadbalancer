@@ -1,17 +1,35 @@
-# KB카드 DTTS HA & LB 설정
+# MAUM HA & LB 설정
 
 ## 1. HA proxy 실행 및 설정
 ---
 ### 1.1 HAProxy 설정
 ---
++ 설정파일은 아래와 위치하는데 없으면 생성한다. `/etc/haproxy/haproxy.cfg`
++ HAProxy 설정으로 두 서버(10.122.64.191, 10.122.64.95)에 동일하게 설정한다.
++ VIP address(10.122.64.119)를 HA proxy LB 설정의 front로 설정하고 10.122.64.119의 50051 포트를 bind한다. 이 때 일단 외부 IP와 바인딩 가능하도록 OS설정 수정이 필요합니다. `/etc/sysctl.conf` 설정 수정이 필요하다.
+```
+$ echo 'net.ipv4.ip_nonlocal_bind=1' >> /etc/sysctl.conf
+$ sysctl -p
+```
 
 ```
+#---------------------------------------------------------------------
+# Example configuration for a possible web application.  See the
+# full configuration options online.
+#
+#   http://haproxy.1wt.eu/download/1.4/doc/configuration.txt
+#
+#---------------------------------------------------------------------
+
 #---------------------------------------------------------------------
 # Global settings
 #---------------------------------------------------------------------
 global
-    log         stdout local0
+    log         127.0.0.1:514 local0
     maxconn     50000
+    user        minds
+    group       minds
+
 #---------------------------------------------------------------------
 # common defaults that all the 'listen' and 'backend' sections will
 # use if not designated in their block
@@ -30,18 +48,20 @@ defaults
 #---------------------------------------------------------------------
 # main frontend which proxys to the backends
 #---------------------------------------------------------------------
-frontend tts_front  
-  bind *:50050 proto h2  
-  default_backend tts_servers
+frontend tts_front
+    bind 10.122.64.119:50051 proto h2
+    capture request header in.sessionid len 100
+    default_backend tts_servers
  
 #---------------------------------------------------------------------
 # round robin balancing between the various backends
 #---------------------------------------------------------------------
 backend tts_servers
-  balance roundrobin  
-  server tts1 10.122.64.166:50051 check proto h2 maxconn 100
-  server tts2 10.122.64.191:50051 check proto h2 maxconn 100 
+    balance roundrobin
+    server  tts1 10.122.64.191:50051 proto h2 maxconn 100
+    server  tts2 10.122.64.95:50051 proto h2 maxconn 100
 ```
+
 ### 1.2 HAProxy의 실행 
 ---
 

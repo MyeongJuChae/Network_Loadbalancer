@@ -50,32 +50,6 @@ install: creating directory `/usr/local/doc/haproxy'
 `doc/intro.txt' -> `/usr/local/doc/haproxy/intro.txt'
 ```
 
-참고로 인터넷 환경이 없을 경우 아래와 같이 package를 미리 받아 둘 수 있다. 
-```
-sudo yum install --downloadonly --downloaddir=. openssl-devel
-sudo yum install --downloadonly --downloaddir=. systemd-devel
-yumdownloader 를 이용한 rpm download
-
-
-
-yumdownloader 명령을 사용하려면 우선 설치를 해야한다. 
-
-
-
-# yum install yum-utils 
-
-
-
-
-
-사용방법: 
-
- ex) # yumdownloader --resolve --destdir=. openssl-devel 
-
---resolve 옵션: 의존되는 모든 패키지들도 다운받도록 해준다.
-
---destdir 옵션: 저장되는 디렉토리를 지정할 수 있다. 
-```
 설치 후 현재경로에서 아래를 확인
 
 ```
@@ -87,6 +61,21 @@ Running on: Linux 3.10.0-1127.19.1.el7.x86_64 #1 SMP Tue Aug 25 17:23:54 UTC 202
 ```
 haproxy는 /usr/local/sbin에 설치됨.
 
+### 1.2 인터넷 환경이 없을 경우 설치방법
+---
+참고로 인터넷 환경이 없을 경우 아래와 같이 package를 미리 받아 둘 수 있다. 
+```
+sudo yum install --downloadonly --downloaddir=. openssl-devel
+sudo yum install --downloadonly --downloaddir=. systemd-devel
+```
++ yumdownloader 를 이용한 rpm download
+yumdownloader 명령을 사용하려면 우선 설치를 해야한다. 
+yum install yum-utils 
+```
+yumdownloader --resolve --destdir=. openssl-devel 
+--resolve 옵션: 의존되는 모든 패키지들도 다운받도록 해준다.
+--destdir 옵션: 저장되는 디렉토리를 지정할 수 있다. 
+```
 
 ## 2. Keepalived 설치
 stable 2.1.5 버전 설치
