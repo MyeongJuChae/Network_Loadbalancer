@@ -1,4 +1,4 @@
-# 95번 /home/mindslab/git/maum_ha의 source를 그대로 사용하
+## 95번 /home/mindslab/git/maum_ha의 source를 그대로 사용함
 
 ### HAProxy
 ***
@@ -12,3 +12,5 @@ rpm install 시
 
 make, make install
 - warning 및 error로 안 됨
+
+## 
