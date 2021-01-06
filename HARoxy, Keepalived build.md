@@ -5,6 +5,7 @@
 rpm install 시
 - Failed to get D-Bus connection: Operation not permitted
 
+
 ### Keepalived
 ***
 ./configure
