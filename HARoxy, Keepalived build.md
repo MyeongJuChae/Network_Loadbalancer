@@ -14,4 +14,4 @@ rpm install 시
 make, make install
 - warning 및 error로 안 됨
 
-## 
+_실수로 ha-install container의 keepalived를 /home/mindslab/git/maum_ha 에 덮어씀. ./configure, make, make install 모두 잘 됨_
