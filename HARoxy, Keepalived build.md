@@ -6,6 +6,7 @@ rpm install 시
 - Failed to get D-Bus connection: Operation not permitted
 
 $ docker run -d --name centos7.4_postgres --privileged -it -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup:ro centos:latest /usr/sbin/init
+_위 내용은 docker container에서 실행시 발생하는 오류_
 
 ### Keepalived
 ***
