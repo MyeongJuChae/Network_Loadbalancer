@@ -1,6 +1,6 @@
-## 95번 /home/mindslab/git/maum_ha의 source를 그대로 사용함
+## 166번 - 95번 /home/mindslab/git/maum_ha의 source를 그대로 사용함
 
-### HAProxy
+### HAProxy 
 ***
 rpm install 시
 - Failed to get D-Bus connection: Operation not permitted
@@ -16,3 +16,15 @@ make, make install
 - warning 및 error로 안 됨
 
 _실수로 ha-install container의 keepalived를 /home/mindslab/git/maum_ha 에 덮어씀. ./configure, make, make install 모두 잘 됨_
+
+***
+VIP : 10.122.64.119/24
+```
+/var/log messeges
+```
+reserved IP : 127.0.0.1:514
+```
+aicc/src/sdn
+source /venv/bin/activate
+tail -f haproxy-trfic.log
+```
