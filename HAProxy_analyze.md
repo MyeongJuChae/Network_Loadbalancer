@@ -18,8 +18,8 @@ ghz --insecure --async --proto ng_tts.proto --call maum.brain.tts.NgTtsService/S
 ## Log 위치
 
 ```
-/sdn/maum/logs/supervisor (tail -f sdn.out)
 /var/log/haproxy-traffic.log (tail -f haproxy-traffic.log)
+/sdn/maum/logs/supervisor (tail -f sdn.out)
 ```
 
 ***
