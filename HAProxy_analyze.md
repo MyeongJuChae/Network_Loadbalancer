@@ -19,7 +19,9 @@ ghz --insecure --async --proto ng_tts.proto --call maum.brain.tts.NgTtsService/S
 
 ```
 /var/log/haproxy-traffic.log (tail -f haproxy-traffic.log)
-/sdn/maum/logs/supervisor (tail -f sdn.out)
+/sdn/maum/logs/supervisor (tail -f sdn.out) 95번
+/srv/maum/logs/supervisor (tail -f sdn.out) 191번
+/srv/maum/logs/supervisor (tail -f sdn.out) 166번
 ```
 
 ***
