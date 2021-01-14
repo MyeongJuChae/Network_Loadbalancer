@@ -5,7 +5,7 @@ https://www.haproxy.com/blog/introduction-to-haproxy-logging/
 95번 서버
 /home/mindslab/tts-load
 ```
-ghz --insecure --async --proto ng_tts.proto --call maum.brain.tts.NgTtsService/SpeakWav -B ./TtsRequest.bin -n 100 --rps 2 10.122.64.191:50051
+ghz --insecure --async --proto ng_tts.proto --call maum.brain.tts.NgTtsService/SpeakWav -B ./TtsRequest.bin -n 100 --rps 2 10.122.64.119:50051
 `--insecure`: Use plaintext and insecure connection.
 `--async`: Make requests asynchronous as soon as possible. Does not wait for request to finish before sending next one.
 `--proto`: The path to The Protocol Buffer .proto file for input
