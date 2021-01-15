@@ -33,5 +33,13 @@ request_ok 는 분할이 잘 되나 tts1의 avg_rt이 폭발적으로 커짐
 1460 ok
 140 DeadlineExceeded
 error distribution:
-rpc error: code = DeadlineExceeded desc = context deadline exceeded
+140 rpc error: code = DeadlineExceeded desc = context deadline exceeded
+```
+**stop haproxy(166번 tts2)**
+**tts1의 avg_rt 증가(?), tts2의 req_ok 증가**
+```
+1499 ok
+101 DeadlineExceede
+error distribution:
+101 rpc error: code = DeadlineExceeded desc = context deadline exceeded
 ```
