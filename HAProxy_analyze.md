@@ -28,6 +28,7 @@ ghz --insecure --async --proto ng_tts.proto --call maum.brain.tts.NgTtsService/S
 명령어
 ```
 halog -srv -H < /var/log/haproxy-traffic.log | column -t
+halog -ut -H < /var/log/haproxy-traffic.log | column -t
 
 -H HTTP로그 (TCP 제외)
 -E 에러 빼고 보기(5xx status 제외)
