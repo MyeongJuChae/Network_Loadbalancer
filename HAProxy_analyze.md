@@ -30,6 +30,12 @@ ghz --insecure --async --proto ng_tts.proto --call maum.brain.tts.NgTtsService/S
 halog -srv -H < /var/log/haproxy-traffic.log | column -t
 halog -ut -H < /var/log/haproxy-traffic.log | column -t
 
+termination code
+-- : normal
+cD : 클라이언트에서 
+SC : 서버에서 TCP 거부 (연결 끊김)
+PC : process socket의 limit이 다 참.
+
 -H HTTP로그 (TCP 제외)
 -E 에러 빼고 보기(5xx status 제외)
 -e 에러만 보기(5xx or negative status)
