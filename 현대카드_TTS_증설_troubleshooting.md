@@ -1,6 +1,6 @@
 ## 현대카드 TTS 증설 trouble shooting
 ***
-1. 증설 서버에서 keepalived 작동 안 됨. 
+1. 증설 서버(10.211.70.246)에서 keepalived 작동 안 됨. 
 
 /usr/lib/systemd/system/keepalived.service 변경
 
@@ -9,7 +9,7 @@
 Type=~~notify~~ -> Type=**forking**
 ***
 
-2. HAProxy VIP port trouble(haproxy.cfg)
+2. HAProxy VIP(10.211.70.247) port trouble(haproxy.cfg)
 - 기존
 ```
 frontend tts_front
@@ -30,7 +30,7 @@ frontend tts_front
 ```
 ***
 3. HAProxy health check
-tts-check.py 파일의 line 33 `f.write` 명령어 권한 관련한 문제 발생.
+tts-check.py 파일의 line 33 `f.write` 명령어 권한 관련 문제 발생.
 ```
     for tts in resp:
       f.write(tts.mediaData)
