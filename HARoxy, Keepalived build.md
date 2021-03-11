@@ -1,5 +1,3 @@
-## 166번 - 95번 /home/mindslab/git/maum_ha의 source를 그대로 사용함
-
 ### HAProxy 
 ***
 rpm install 시
@@ -19,7 +17,7 @@ make, make install
 _실수로 ha-install container의 keepalived를 /home/mindslab/git/maum_ha 에 덮어씀. ./configure, make, make install 모두 잘 됨_
 
 ***
-VIP : 10.122.64.119/24
+VIP : 
 ```
 /var/log messeges
 ```

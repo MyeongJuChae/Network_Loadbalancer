@@ -1,22 +1,22 @@
-#현대카드 TTS 증설 관련 정보
+#증설 관련 정보
 ----
 ## 장비 IP address
 ---
-+ 기존장비 IP: 10.211.70.243
-+ 증설장비 IP: 10.211.70.246
-+ VIP: 10.211.70.247
++ 기존장비 IP: 
++ 증설장비 IP: 
++ VIP: 
 
 ## 서비스 포트
 - waveglow
-35101, 35102, 35103, 35014, 35105, 35106
+
 - tacotron2
-30101, 30102, 30103, 30104, 30105, 30106
+
 - core
- 9999, 10000, 10001, 10002, 10003, 10004
+ 
 - custom
-19999, 20000, 20001, 20002, 20003, 20004
+
 - sdn
-50051
+
 
 ## root 권한으로 작업 실행
 지금부터 진행하는 작업은 모두 root 권한으로 작업해야 함.
@@ -38,7 +38,7 @@ tar에 압축된 파일의 정보
 ```
 
 ## 설정 변경
-+ 10.211.70.243 장비를 MASTER로 하고 10.211.70.246 장비를 BACKUP으로 한다.
++ 장비를 MASTER로 하고 장비를 BACKUP으로 한다.
 + 각 장비의 keepalived 설정 경로로 이동하여 
 ```
 cd /usr/local/etc/keepalived
@@ -93,7 +93,7 @@ frontend stats
 # main frontend which proxys to the backends
 #---------------------------------------------------------------------
 frontend tts_front
-    bind 10.211.70.247:50051 proto h2
+    bind IP proto h2
     capture request header in.sessionid len 100
     default_backend tts_servers
 ```
@@ -104,7 +104,7 @@ systemctl reload haproxy
 ```
 + haproxy 통계 페이지에 접속한다. 웹브라우즈 주소창에 아래를 입력
 ```
-http:/10.211.70.243/stats
+http:/IP/stats
 ```
 
 ## HAProxy의 Health check
@@ -121,42 +121,43 @@ global
     maxconn     50000
     insecure-fork-wanted   #추가
     external-check              #추가
-    user        mindslab
-    group       mindslab
+    user        
+    group       
 
 (...생략...)
 backend tts_servers
     option  external-check   #추가
-    external-check command /srv/maum/check/check-tts.sh   #추가
+    external-check command /srv/check/check-tts.sh   #추가
     balance roundrobin
-    #server  tts1 10.122.64.191:50051 proto h2 maxconn 100 
-    #server  tts2 10.122.64.166:50051 proto h2 maxconn 100 
-    server  tts1 10.122.64.191:50051 proto h2 maxconn 100 check inter 10000   #변경
-    server  tts2 10.122.64.166:50051 proto h2 maxconn 100 check inter 10000   #변경
+    #server  tts1  proto h2 maxconn 100 
+    #server  tts2  proto h2 maxconn 100 
+    server  tts1  proto h2 maxconn 100 check inter 10000   #변경
+    server  tts2  proto h2 maxconn 100 check inter 10000   #변경
 
 ```
 ## Health check 스크립트 내용
-헬쓰 체크 스크립트는 /src/maum/check에 위치하며 처음 설치하는 경우 /srv/maum 경로에서 아래의 tar파일을 풀어서 설치한다.
+헬쓰 체크 스크립트는 /src/check에 위치하며 처음 설치하는 경우 /srv 경로에서 아래의 tar파일을 풀어서 설치한다.
 ```
-cd /srv/maum
+cd /srv
 tar xvf tts-check.tar
 ```
 스크립트는 haproxy 설정에 의해 check-tts.sh가 호출되면 tts-check.py(간단한 TTS grpc client)를 실행해서 TTS 서비스의 정상운영 여부(Up or Down)을 판단한다.
 ```bash
--rwxrwxr-x. 1 mindslab mindslab   626  1월 20 10:48 check-tts.sh
--rw-rw-r--. 1 mindslab mindslab  1117  1월 19 19:51 ng_tts.proto
--rw-rw-r--. 1 mindslab mindslab 13852  1월 19 19:51 ng_tts_pb2.py
--rw-rw-r--. 1 mindslab mindslab  7640  1월 19 19:52 ng_tts_pb2.pyc
--rw-rw-r--. 1 mindslab mindslab  6743  1월 19 19:51 ng_tts_pb2_grpc.py
--rw-rw-r--. 1 mindslab mindslab  5496  1월 19 19:52 ng_tts_pb2_grpc.pyc
--rw-rw-r--. 1 mindslab mindslab 30856  1월 20 10:51 test00.wav
--rwxrwxr-x. 1 mindslab mindslab  1640  1월 20 09:33 tts-check.py
+-rwxrwxr-x. 1    626  1월 20 10:48 check-tts.sh
+-rw-rw-r--. 1   1117  1월 19 19:51 ng_tts.proto
+-rw-rw-r--. 1  13852  1월 19 19:51 ng_tts_pb2.py
+-rw-rw-r--. 1   7640  1월 19 19:52 ng_tts_pb2.pyc
+-rw-rw-r--. 1   6743  1월 19 19:51 ng_tts_pb2_grpc.py
+-rw-rw-r--. 1   5496  1월 19 19:52 ng_tts_pb2_grpc.pyc
+-rw-rw-r--. 1  30856  1월 20 10:51 test00.wav
+-rwxrwxr-x. 1   1640  1월 20 09:33 tts-check.py
 
 ```
 
 ## Firewall 관련 명령어(참고용)
 keepalived 동작 관련 문제가 있을 경우 firewalld 서비스를 확인할 필요가 있음
 아래 명령어들을 참고해서 troubleshooting할 것
+
 ```
 systemctl start firewalld
 systemctl enable firewalld

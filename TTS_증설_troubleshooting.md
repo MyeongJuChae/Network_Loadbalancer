@@ -1,6 +1,6 @@
-## 현대카드 TTS 증설 trouble shooting
+## TTS 증설 trouble shooting
 ***
-1. 증설 서버(10.211.70.246)에서 keepalived 작동 안 됨. 
+1. 증설 서버에서 keepalived 작동 안 됨. 
 
 /usr/lib/systemd/system/keepalived.service 변경
 
@@ -9,7 +9,7 @@
 Type=~~notify~~ -> Type=**forking**
 ***
 
-2. HAProxy VIP(10.211.70.247) port trouble(haproxy.cfg)
+2. HAProxy VIP port trouble(haproxy.cfg)
 - 기존
 ```
 frontend tts_front
@@ -24,7 +24,7 @@ port를 **50053**으로 바꿈
 - 변경 후
 ```
 frontend tts_front
-    bind 10.211.70.247:50053 proto h2
+    bind IP:50053 proto h2
     capture request header in.sessionid len 100
     default_backend tts_servers
 ```
@@ -36,6 +36,6 @@ tts-check.py 파일의 line 33 `f.write` 명령어 권한 관련 문제 발생.
       f.write(tts.mediaData)
     f.close()
 ```
-증설 서버(10.211.70.246)의 디렉토리 권한이 redhat/redhat 으로 되어 있어 health check 실패.
+증설 서버의 디렉토리 권한이 redhat/redhat 으로 되어 있어 health check 실패.
 
 **-> chown 으로 해결(...)**
